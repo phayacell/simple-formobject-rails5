@@ -1,0 +1,33 @@
+<h1>Users#edit</h1>
+
+<% if @form.errors.any? %>
+  <ul>
+    <% @form.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_with model: @form, url: user_path, method: "put", class: "row", local: true do |f| %>
+  <%= f.fields_for :user do |user_fields| %>
+    <p>
+      <div><%= user_fields.label :email, "Email" %></div>
+      <div><%= user_fields.email_field :email %></div>
+    </p>
+  <% end %>
+
+  <%= f.fields_for :profile do |profile_fields| %>
+    <p>
+      <div><%= profile_fields.label :name, "Name" %></div>
+      <div><%= profile_fields.text_field :name %></div>
+    </p>
+    <p>
+      <div><%= profile_fields.label :address, "Address" %></div>
+      <div><%= profile_fields.text_field :address, include_blank: true %></div>
+    </p>
+  <% end %>
+
+  <p>
+    <%= f.button "Save" %>
+  </p>
+<% end %>
